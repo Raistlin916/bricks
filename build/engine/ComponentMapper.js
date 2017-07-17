@@ -9,5 +9,15 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var ComponentMapper = (function () {
+        function ComponentMapper() {
+            this.maps = {};
+        }
+        ComponentMapper.prototype.get = function (entity) {
+            return this.maps[entity.id];
+        };
+        return ComponentMapper;
+    }());
+    exports.default = ComponentMapper;
 });
-//# sourceMappingURL=Entity.js.map
+//# sourceMappingURL=ComponentMapper.js.map

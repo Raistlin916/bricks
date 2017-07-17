@@ -4,12 +4,12 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./engine/World"], factory);
+        define(["require", "exports", "./Bricks/index"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var World_1 = require("./engine/World");
-    console.log(World_1.default);
+    var index_1 = require("./Bricks/index");
+    var bricks = new index_1.default();
 });
 //# sourceMappingURL=main.js.map

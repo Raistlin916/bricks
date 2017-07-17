@@ -9,5 +9,13 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var Physical = (function () {
+        function Physical() {
+            this.vx = 0;
+            this.vy = 0;
+        }
+        return Physical;
+    }());
+    exports.default = Physical;
 });
-//# sourceMappingURL=Entity.js.map
+//# sourceMappingURL=Physical.js.map

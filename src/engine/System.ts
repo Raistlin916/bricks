@@ -1,15 +1,24 @@
-export default class System {
-  private entityIds: Array<number>;
+import Entity from './Entity';
 
-  insert(entityId: number) {
-    this.entityIds.push(entityId);
+export default abstract class System {
+  private entities: Entity[];
+
+  insert(entity: Entity): void {
+    this.entities.push(entity);
   }
 
-  remove(entityId: number) {
-    this.entityIds.splice(this.entityIds.indexOf(entityId), 1);
+  remove(entity: Entity): boolean {
+    return this.entities.some((item: Entity, index: number) => {
+      if (item.id === entity.id) {
+        this.entities.splice(index, 1);
+        return true;
+      }
+    })
   }
 
-  getEntities() {
-    return this.entityIds;
+  getEntities(): Entity[] {
+    return this.entities;
   }
+
+  abstract process(entity: Entity, delta: number): void;
 }

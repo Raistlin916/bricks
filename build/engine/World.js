@@ -4,16 +4,23 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports"], factory);
+        define(["require", "exports", "./EntityManager"], factory);
     }
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    var EntityManager_1 = require("./EntityManager");
     var World = (function () {
         function World() {
+            this.systems = [];
+            this.entityManger = new EntityManager_1.default();
         }
         World.prototype.addSystem = function (system) {
-            return this.systems.push(system);
+            this.systems.push(system);
+            return this;
+        };
+        World.prototype.createEntity = function () {
+            return this.entityManger.create();
         };
         return World;
     }());

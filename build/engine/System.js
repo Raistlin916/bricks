@@ -12,14 +12,20 @@
     var System = (function () {
         function System() {
         }
-        System.prototype.insert = function (entityId) {
-            this.entityIds.push(entityId);
+        System.prototype.insert = function (entity) {
+            this.entities.push(entity);
         };
-        System.prototype.remove = function (entityId) {
-            this.entityIds.splice(this.entityIds.indexOf(entityId), 1);
+        System.prototype.remove = function (entity) {
+            var _this = this;
+            return this.entities.some(function (item, index) {
+                if (item.id === entity.id) {
+                    _this.entities.splice(index, 1);
+                    return true;
+                }
+            });
         };
         System.prototype.getEntities = function () {
-            return this.entityIds;
+            return this.entities;
         };
         return System;
     }());

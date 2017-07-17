@@ -1,2 +1,3 @@
-import World from './engine/World'
-console.log(World)
+import Bricks from './Bricks/index'
+
+const bricks = new Bricks()

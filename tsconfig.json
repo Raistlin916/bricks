@@ -1,10 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "umd",
-        "sourceMap": true,
-        "outDir": "./build",
-        "watch": true,
-        "lib": ["es6", "dom"]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "umd",
+    "sourceMap": true,
+    "outDir": "./build",
+    "watch": true,
+    "lib": ["es6", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "engine/*": ["./src/engine/*"]
     }
+  }
 }
