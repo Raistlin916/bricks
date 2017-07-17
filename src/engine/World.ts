@@ -1,9 +1,9 @@
 import System from './System'
-import Entity from './Entity'
+import EntityEdit from './EntityEdit'
 import EntityManger from './EntityManager'
 
 export default class World {
-  private systems: Array<System> = [];
+  private systems: System[] = [];
   private entityManger: EntityManger = new EntityManger();
 
   public addSystem(system: System): World {
@@ -11,7 +11,7 @@ export default class World {
     return this;
   }
 
-  createEntity(): Entity {
+  createEntity(): EntityEdit {
     return this.entityManger.create();
   }
 }

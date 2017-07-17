@@ -3,11 +3,11 @@ import Entity from './Entity';
 export default abstract class System {
   private entities: Entity[];
 
-  insert(entity: Entity): void {
+  public insert(entity: Entity): void {
     this.entities.push(entity);
   }
 
-  remove(entity: Entity): boolean {
+  public remove(entity: Entity): boolean {
     return this.entities.some((item: Entity, index: number) => {
       if (item.id === entity.id) {
         this.entities.splice(index, 1);
@@ -16,7 +16,7 @@ export default abstract class System {
     })
   }
 
-  getEntities(): Entity[] {
+  public getEntities(): Entity[] {
     return this.entities;
   }
 

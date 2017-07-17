@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/Bricks/index.ts"],"names":[],"mappings":";;;;;;;;;;;IAAA,sCAAgC;IAChC,2DAAqD;IAErD;QAGE;YACE,IAAI,CAAC,KAAK,GAAG,IAAI,eAAK,EAAE,CAAA;YACxB,IAAI,CAAC,KAAK,CAAC,SAAS,CAAC,IAAI,wBAAc,EAAE,CAAC,CAAA;YAC1C,OAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAA;QACnB,CAAC;QACH,aAAC;IAAD,CAAC,AARD,IAQC"}
