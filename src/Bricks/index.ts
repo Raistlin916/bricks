@@ -9,19 +9,20 @@ export default class Bricks {
   private world: World;
 
   constructor() {
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    document.body.appendChild(canvas);
 
-    this.world = new World()
-    this.world.importComponents(components)
+    this.world = new World();
+    this.world.importComponents(components);
     this.world.addSystem(new PhysicalSystem())
-      .addSystem(new RenderSystem(ctx))
+      .addSystem(new RenderSystem(ctx));
 
 
-    entityFactory.createBrick(this.world, 10, 10)
+    entityFactory.createBrick(this.world, 10, 10);
 
     setInterval(() => {
-      this.world.process(0.01)
-    }, 1000)
+      this.world.process(0.1);
+    }, 100);
   }
 }
