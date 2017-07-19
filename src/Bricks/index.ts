@@ -1,9 +1,11 @@
 import World from 'engine/World'
+import Component, { Components } from 'engine/Component'
 import PhysicalSystem from './systems/PhysicalSystem'
 import RenderSystem from './systems/RenderSystem'
 import entityFactory from './entityFactory'
-import * as components from './components/index'
+import * as com from './components/index'
 
+const components: Components = {...com};
 
 export default class Bricks {
   private world: World;

@@ -2,7 +2,7 @@ import System from './System'
 import EntityEdit from './EntityEdit'
 import EntityManager from './EntityManager'
 import ComponentManager from './ComponentManager'
-import Component from 'engine/Component'
+import Component, { Components } from './Component'
 
 export default class World {
   private systems: System[] = [];
@@ -34,7 +34,7 @@ export default class World {
     });
   }
 
-  public importComponents(components) {
+  public importComponents(components: Components) {
     for(let key in components) {
       this.componentManager.createMapper(components[key])
     }
