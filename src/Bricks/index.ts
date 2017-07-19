@@ -1,12 +1,24 @@
 import World from 'engine/World'
 import PhysicalSystem from './systems/PhysicalSystem'
+import RenderSystem from './systems/RenderSystem'
+import entityFactory from './entityFactory'
 
 export default class Bricks {
   private world: World;
 
   constructor() {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+
     this.world = new World()
     this.world.addSystem(new PhysicalSystem())
-    console.log(this)
+      .addSystem(new RenderSystem(ctx))
+
+
+    entityFactory.createBrick(this.world, 10, 10)
+
+    setInterval(() => {
+      this.world.process(0.01)
+    }, 1000)
   }
 }

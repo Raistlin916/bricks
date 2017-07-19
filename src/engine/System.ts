@@ -1,7 +1,13 @@
 import Entity from './Entity';
+import Aspect from './Aspect';
 
 export default abstract class System {
   private entities: Entity[];
+  protected aspect: Aspect;
+
+  constructor(aspect: Aspect) {
+    this.aspect = aspect;
+  }
 
   public insert(entity: Entity): void {
     this.entities.push(entity);
@@ -18,6 +24,10 @@ export default abstract class System {
 
   public getEntities(): Entity[] {
     return this.entities;
+  }
+
+  public getAspect() {
+    return this.aspect;
   }
 
   abstract process(entity: Entity, delta: number): void;

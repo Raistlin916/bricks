@@ -1,6 +1,7 @@
 import System from 'engine/System'
 import Entity from 'engine/Entity'
 import ComponentMapper from 'engine/ComponentMapper'
+import Aspect from 'engine/Aspect'
 import Position from '../components/Position'
 
 export default class RenderSystem extends System {
@@ -9,7 +10,7 @@ export default class RenderSystem extends System {
   private ctx: CanvasRenderingContext2D;
 
   constructor(ctx: CanvasRenderingContext2D) {
-    super()
+    super(Aspect.all(Position))
     this.ctx = ctx;
   }
 
