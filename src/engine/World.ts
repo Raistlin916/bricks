@@ -2,14 +2,16 @@ import System from './System'
 import EntityEdit from './EntityEdit'
 import EntityManager from './EntityManager'
 import ComponentManager from './ComponentManager'
+import Component from 'engine/Component'
 
 export default class World {
   private systems: System[] = [];
   private entityManager: EntityManager = new EntityManager(this);
   private componentManager: ComponentManager = new ComponentManager(this);
 
-  public addSystem(system: System): World {
-    this.systems.push(system)
+  public addSystem(system: System): this {
+    this.systems.push(system);
+    system.attachWorld(this);
     return this;
   }
 
@@ -27,8 +29,14 @@ export default class World {
 
   public process(delta: number): void {
     this.systems.forEach(system => {
-      this.componentManager.query(system.getAspect())
+      this.entityManager.query(system.getAspect())
         .forEach(entity => system.process(entity, delta));
     });
+  }
+
+  public importComponents(components) {
+    for(let key in components) {
+      this.componentManager.createMapper(components[key])
+    }
   }
 }

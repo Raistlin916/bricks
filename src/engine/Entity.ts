@@ -1,3 +1,2 @@
-export default interface Entity {
-  id: number;
-}
+type Entity = number
+export default Entity

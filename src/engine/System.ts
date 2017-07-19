@@ -1,5 +1,7 @@
 import Entity from './Entity';
 import Aspect from './Aspect';
+import World from './World';
+import ComponentManager from './ComponentManager'
 
 export default abstract class System {
   private entities: Entity[];
@@ -15,7 +17,7 @@ export default abstract class System {
 
   public remove(entity: Entity): boolean {
     return this.entities.some((item: Entity, index: number) => {
-      if (item.id === entity.id) {
+      if (item === entity) {
         this.entities.splice(index, 1);
         return true;
       }
@@ -26,9 +28,17 @@ export default abstract class System {
     return this.entities;
   }
 
-  public getAspect() {
+  public getAspect(): Aspect {
     return this.aspect;
   }
 
   abstract process(entity: Entity, delta: number): void;
+
+  public attachWorld(world: World): void {
+    const cm: ComponentManager = world.getComponentManager();
+    const componentMappers = cm.getMappers();
+    Object.keys(componentMappers).forEach(key => {
+      this[`${key.toLowerCase()}Mapper`] = componentMappers[key]
+    });
+  }
 }

@@ -2,11 +2,12 @@ import World from './World'
 import Component from './Component'
 import ComponentMapper from './ComponentMapper'
 import Entity from './Entity'
-import Aspect from './Aspect'
+
+type ComponentMappers = {[key: string]: ComponentMapper<any>}
 
 export default class ComponentManager {
   private world: World;
-  private componentMappers = {};
+  private componentMappers: ComponentMappers = {};
 
   constructor(world: World) {
     this.world = world
@@ -21,26 +22,20 @@ export default class ComponentManager {
     cm.add(component, entity)
   }
 
+  public createMapper<T extends Component>(componentClass: new() => Component): void {
+    let cm: ComponentMapper<T> = this.componentMappers[componentClass.name];
+    if (!cm) {
+      this.componentMappers[componentClass.name] = new ComponentMapper<T>();
+    }
+  }
+
   public remove(entity: Entity): void {
     Object.keys(this.componentMappers).forEach(key => {
       this.componentMappers[key].remove(entity);
     });
   }
 
-  public query(aspect: Aspect): Entity[] {
-    const allTypes = aspect.getAllTypes()
-    const result = {}
-    allTypes.forEach(klass => {
-      const componentMapper = this.componentMappers[klass.name]
-      if (!componentMapper) {
-        return
-      }
-      componentMapper.getEntityIds()
-        .forEach(id => {
-          result[id] = true
-        })
-    })
-
-    return Object.keys(result).map(id => ({ id: +id }))
+  public getMappers(): ComponentMappers {
+    return this.componentMappers
   }
 }

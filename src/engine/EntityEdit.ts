@@ -11,7 +11,7 @@ export default class EntityEdit {
     this.world = world;
   }
 
-  public add<T extends Component>(component: T): EntityEdit {
+  public add<T extends Component>(component: T): this {
     this.world
       .getComponentManager()
       .create(component, this.entity)

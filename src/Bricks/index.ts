@@ -2,6 +2,8 @@ import World from 'engine/World'
 import PhysicalSystem from './systems/PhysicalSystem'
 import RenderSystem from './systems/RenderSystem'
 import entityFactory from './entityFactory'
+import * as components from './components/index'
+
 
 export default class Bricks {
   private world: World;
@@ -11,6 +13,7 @@ export default class Bricks {
     const ctx = canvas.getContext('2d')
 
     this.world = new World()
+    this.world.importComponents(components)
     this.world.addSystem(new PhysicalSystem())
       .addSystem(new RenderSystem(ctx))
 
