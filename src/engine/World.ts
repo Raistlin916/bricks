@@ -29,8 +29,10 @@ export default class World {
 
   public process(delta: number): void {
     this.systems.forEach(system => {
+      system.onBegin();
       this.entityManager.query(system.getAspect())
         .forEach(entity => system.process(entity, delta));
+      system.onEnd();
     });
   }
 

@@ -2,6 +2,7 @@ import World from 'engine/World'
 import Component, { Components } from 'engine/Component'
 import PhysicalSystem from './systems/PhysicalSystem'
 import RenderSystem from './systems/RenderSystem'
+import WallSensorSystem from './systems/WallSensorSystem'
 import entityFactory from './entityFactory'
 import * as com from './components/index'
 
@@ -13,18 +14,23 @@ export default class Bricks {
   constructor() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
+    canvas.width = 500
+    canvas.height = 500
     document.body.appendChild(canvas);
 
     this.world = new World();
     this.world.importComponents(components);
-    this.world.addSystem(new PhysicalSystem())
+    this.world
+      .addSystem(new WallSensorSystem())
+      .addSystem(new PhysicalSystem())
       .addSystem(new RenderSystem(ctx));
 
 
     entityFactory.createBrick(this.world, 10, 10);
+    entityFactory.createBall(this.world, 10, 10);
 
     setInterval(() => {
-      this.world.process(0.1);
-    }, 100);
+      this.world.process(0.016);
+    }, 16);
   }
 }

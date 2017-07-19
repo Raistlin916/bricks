@@ -41,4 +41,12 @@ export default abstract class System {
       this[`${key.toLowerCase()}Mapper`] = componentMappers[key]
     });
   }
+
+  public onBegin(): void{
+
+  }
+
+  public onEnd(): void{
+
+  }
 }

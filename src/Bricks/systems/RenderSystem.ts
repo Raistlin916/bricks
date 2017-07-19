@@ -21,17 +21,28 @@ export default class RenderSystem extends System {
     this.height = this.ctx.canvas.height;
   }
 
-  process(entity: Entity, delta: number): void {
+  public onBegin(): void {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
+  public process(entity: Entity, delta: number): void {
     const { ctx } = this;
-    ctx.clearRect(0, 0, this.width, this.height);
+
     const position = this.positionMapper.get(entity);
     const paint = this.paintMapper.get(entity);
 
     ctx.save();
+    ctx.translate(position.x, position.y);
+
     if (paint.type === 'brick') {
-      ctx.translate(position.x, position.y);
       ctx.fillStyle = 'red';
       ctx.fillRect(0, 0, 20, 10);
+    } else if (paint.type === 'ball') {
+      ctx.fillStyle = 'grey';
+      ctx.beginPath();
+      ctx.arc(0, 0, 5, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
     }
     ctx.restore();
   }
