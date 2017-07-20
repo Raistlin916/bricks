@@ -3,6 +3,7 @@ import Component, { Components } from 'engine/Component'
 import PhysicalSystem from './systems/PhysicalSystem'
 import RenderSystem from './systems/RenderSystem'
 import WallSensorSystem from './systems/WallSensorSystem'
+import PlayerControlSystem from './systems/PlayerControlSystem'
 import entityFactory from './entityFactory'
 import * as com from './components/index'
 
@@ -21,6 +22,7 @@ export default class Bricks {
     this.world = new World();
     this.world.importComponents(components);
     this.world
+      .addSystem(new PlayerControlSystem())
       .addSystem(new WallSensorSystem())
       .addSystem(new PhysicalSystem())
       .addSystem(new RenderSystem(ctx));
@@ -28,6 +30,7 @@ export default class Bricks {
 
     entityFactory.createBrick(this.world, 10, 10);
     entityFactory.createBall(this.world, 10, 10);
+    entityFactory.createBoard(this.world, 50, 200);
 
     setInterval(() => {
       this.world.process(0.016);
