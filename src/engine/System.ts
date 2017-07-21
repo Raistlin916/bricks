@@ -3,6 +3,10 @@ import Aspect from './Aspect';
 import World from './World';
 import ComponentManager from './ComponentManager'
 
+const lowerFirstLetter = (string: string): string => {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
 export default abstract class System {
   private entities: Entity[];
   protected aspect: Aspect;
@@ -34,11 +38,16 @@ export default abstract class System {
 
   abstract process(entity: Entity, delta: number): void;
 
-  public attachWorld(world: World): void {
+  public bindWorld(world: World): void {
     const cm: ComponentManager = world.getComponentManager();
     const componentMappers = cm.getMappers();
     Object.keys(componentMappers).forEach(key => {
       this[`${key.toLowerCase()}Mapper`] = componentMappers[key]
+    });
+    const systems: System[] = world.getSystems()
+    systems.forEach(system => {
+      system[lowerFirstLetter(this.constructor.name)] = this;
+      this[lowerFirstLetter(system.constructor.name)] = system;
     });
   }
 

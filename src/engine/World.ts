@@ -11,8 +11,12 @@ export default class World {
 
   public addSystem(system: System): this {
     this.systems.push(system);
-    system.attachWorld(this);
+    system.bindWorld(this);
     return this;
+  }
+
+  public getSystems(): System[] {
+    return this.systems;
   }
 
   public createEntity(): EntityEdit {

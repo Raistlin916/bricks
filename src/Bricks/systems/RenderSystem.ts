@@ -4,11 +4,13 @@ import ComponentMapper from 'engine/ComponentMapper'
 import Aspect from 'engine/Aspect'
 import Position from '../components/Position'
 import Paint from '../components/Paint'
+import Bound from '../components/Bound'
 
 export default class RenderSystem extends System {
 
   private positionMapper: ComponentMapper<Position>;
   private paintMapper: ComponentMapper<Paint>;
+  private boundMapper: ComponentMapper<Bound>;
 
   private ctx: CanvasRenderingContext2D;
   private width: number;
@@ -21,8 +23,14 @@ export default class RenderSystem extends System {
     this.height = this.ctx.canvas.height;
   }
 
+  public getSize(): Bound {
+    return new Bound(this.width, this.height);
+  }
+
   public onBegin(): void {
     this.ctx.clearRect(0, 0, this.width, this.height);
+    this.ctx.fillStyle = '#eee'
+    this.ctx.fillRect(0, 0, this.width, this.height);
   }
 
   public process(entity: Entity, delta: number): void {
@@ -30,22 +38,23 @@ export default class RenderSystem extends System {
 
     const position = this.positionMapper.get(entity);
     const paint = this.paintMapper.get(entity);
+    const bound = this.boundMapper.get(entity);
 
     ctx.save();
     ctx.translate(position.x, position.y);
 
     if (paint.type === 'brick') {
       ctx.fillStyle = 'red';
-      ctx.fillRect(0, 0, 20, 10);
+      ctx.fillRect(0, 0, bound.width, bound.height);
     } else if (paint.type === 'ball') {
       ctx.fillStyle = 'grey';
       ctx.beginPath();
-      ctx.arc(0, 0, 5, 0, Math.PI * 2);
+      ctx.arc(0, 0, bound.width, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fill();
     } else if (paint.type === 'board') {
       ctx.fillStyle = 'blue';
-      ctx.fillRect(0, 0, 20, 10);
+      ctx.fillRect(0, 0, bound.width, bound.height);
     }
     ctx.restore();
   }
