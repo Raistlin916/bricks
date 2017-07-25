@@ -19,7 +19,10 @@ export default class EntityManager {
   }
 
   remove(entity: Entity): void {
-    this.entities.splice(this.entities.indexOf(entity), 1)
+    const index = this.entities.indexOf(entity)
+    if (index > -1) {
+      this.entities.splice(index, 1)
+    }
   }
 
   public query(aspect: Aspect): Entity[] {

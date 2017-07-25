@@ -14,11 +14,21 @@ export default class CollisionSystem extends System {
   }
 
   process(entity: Entity, delta: number): void {
+    const physical = this.physicalMapper.get(entity)
+    const position = this.positionMapper.get(entity)
+
     this.teamManager.getTeam('board').forEach(target => {
       if (this.overlap(target, entity)) {
-        const physical = this.physicalMapper.get(entity)
-        physical.vx = -physical.vx
+        const targetPosition = this.positionMapper.get(target)
+        const targetPhysical = this.physicalMapper.get(target)
+        physical.vx = physical.vx + targetPhysical.vx / 10
         physical.vy = -physical.vy
+      }
+    })
+
+    this.teamManager.getTeam('brick').forEach(target => {
+      if (this.overlap(target, entity)) {
+        this.entityManager.remove(target)
       }
     })
   }

@@ -28,6 +28,7 @@ export default {
       .add(new Paint('board'))
       .add(new Physical())
       .add(new PlayerControlled())
+      .add(new WallSensor())
       .add(new Bound(20, 5))
       .getEntity()
   }
