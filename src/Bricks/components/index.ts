@@ -4,7 +4,7 @@ import Position from './Position'
 import WallSensor from './WallSensor'
 import PlayerControlled from './PlayerControlled'
 import Bound from './Bound'
-import Dash from './Dash'
+import Charge from './Charge'
 import Rebound from './Rebound'
 
 export {
@@ -14,6 +14,6 @@ export {
   WallSensor,
   PlayerControlled,
   Bound,
-  Dash,
+  Charge,
   Rebound
 }

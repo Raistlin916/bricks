@@ -24,16 +24,16 @@ export default class WallSensorSystem extends System {
     const bound = this.boundMapper.get(entity);
     const screenSize = this.renderSystem.getSize()
 
-    if (position.x - bound.width < 0) {
+    if (position.x - bound.x2 < 0) {
       physical.vx = -physical.vx
     }
-    if (position.x + bound.width > screenSize.width) {
+    if (position.x + bound.x2 > screenSize.x2) {
       physical.vx = -physical.vx
     }
-    if (position.y - bound.height < 0) {
+    if (position.y - bound.y2 < 0) {
       physical.vy = -physical.vy
     }
-    if (position.y + bound.height > screenSize.height) {
+    if (position.y + bound.y2 > screenSize.y2) {
       physical.vy = -physical.vy
     }
   }

@@ -15,16 +15,18 @@ export default class RenderSystem extends System {
   private ctx: CanvasRenderingContext2D;
   private width: number;
   private height: number;
+  private size: Bound;
 
   constructor(ctx: CanvasRenderingContext2D) {
     super(Aspect.all(Position, Paint))
     this.ctx = ctx;
     this.width = this.ctx.canvas.width;
     this.height = this.ctx.canvas.height;
+    this.size = new Bound(this.width, this.height)
   }
 
   public getSize(): Bound {
-    return new Bound(this.width, this.height);
+    return this.size;
   }
 
   public onBegin(): void {
@@ -45,16 +47,16 @@ export default class RenderSystem extends System {
 
     if (paint.type === 'brick') {
       ctx.fillStyle = 'red';
-      ctx.fillRect(0, 0, bound.width, bound.height);
+      ctx.fillRect(0, 0, bound.x2, bound.y2);
     } else if (paint.type === 'ball') {
       ctx.fillStyle = 'grey';
       ctx.beginPath();
-      ctx.arc(0, 0, bound.width, 0, Math.PI * 2);
+      ctx.arc(0, 0, bound.x2, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fill();
     } else if (paint.type === 'board') {
       ctx.fillStyle = 'blue';
-      ctx.fillRect(0, 0, bound.width, bound.height);
+      ctx.fillRect(0, 0, bound.x2, bound.y2);
     }
     ctx.restore();
   }

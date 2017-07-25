@@ -4,8 +4,10 @@ import PhysicalSystem from './systems/PhysicalSystem'
 import RenderSystem from './systems/RenderSystem'
 import WallSensorSystem from './systems/WallSensorSystem'
 import PlayerControlSystem from './systems/PlayerControlSystem'
+import CollisionSystem from './systems/CollisionSystem'
 import entityFactory from './entityFactory'
 import * as com from './components/index'
+
 
 const components: Components = {...com};
 
@@ -15,8 +17,8 @@ export default class Bricks {
   constructor() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 500
-    canvas.height = 500
+    canvas.width = 200
+    canvas.height = 200
     document.body.appendChild(canvas);
 
     this.world = new World();
@@ -24,13 +26,19 @@ export default class Bricks {
     this.world
       .addSystem(new PlayerControlSystem())
       .addSystem(new WallSensorSystem())
+      .addSystem(new CollisionSystem())
       .addSystem(new PhysicalSystem())
       .addSystem(new RenderSystem(ctx));
 
+    const teamManager = this.world.getTeamManager();
 
-    entityFactory.createBrick(this.world, 10, 10);
-    entityFactory.createBall(this.world, 10, 10);
-    entityFactory.createBoard(this.world, 50, 200);
+    const brick = entityFactory.createBrick(this.world, 10, 10);
+    const ball = entityFactory.createBall(this.world, 10, 10);
+    const board = entityFactory.createBoard(this.world, 70, 100);
+
+    teamManager.addTeam('brick', brick);
+    teamManager.addTeam('ball', ball);
+    teamManager.addTeam('board', board);
 
     setInterval(() => {
       this.world.process(0.016);

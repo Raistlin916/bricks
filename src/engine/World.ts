@@ -1,6 +1,7 @@
 import System from './System'
 import EntityEdit from './EntityEdit'
 import EntityManager from './EntityManager'
+import TeamManager from './TeamManager'
 import ComponentManager from './ComponentManager'
 import Component, { Components } from './Component'
 
@@ -8,6 +9,7 @@ export default class World {
   private systems: System[] = [];
   private entityManager: EntityManager = new EntityManager(this);
   private componentManager: ComponentManager = new ComponentManager(this);
+  private teamManager: TeamManager = new TeamManager();
 
   public addSystem(system: System): this {
     this.systems.push(system);
@@ -29,6 +31,10 @@ export default class World {
 
   public getEntityManager(): EntityManager {
     return this.entityManager;
+  }
+
+  public getTeamManager(): TeamManager {
+    return this.teamManager;
   }
 
   public process(delta: number): void {

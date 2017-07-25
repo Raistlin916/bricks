@@ -1,6 +1,6 @@
 import World from 'engine/World'
 import Entity from 'engine/Entity'
-import { Position, Paint, Physical, WallSensor, Bound, PlayerControlled } from './components/index'
+import { Position, Paint, Physical, WallSensor, Bound, PlayerControlled, Charge } from './components/index'
 
 export default {
   createBrick(world: World, x: number, y: number): Entity {
@@ -16,8 +16,9 @@ export default {
       .add(new Position(x, y))
       .add(new Paint('ball'))
       .add(new Physical(50, 200))
-      .add(new Bound(5, 5))
+      .add(new Bound(-5, -5, 5, 5))
       .add(new WallSensor())
+      .add(new Charge())
       .getEntity()
   },
 
