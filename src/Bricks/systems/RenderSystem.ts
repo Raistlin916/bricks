@@ -56,7 +56,11 @@ export default class RenderSystem extends System {
       ctx.fill();
     } else if (paint.type === 'board') {
       ctx.fillStyle = 'blue';
-      ctx.fillRect(0, 0, bound.x2, bound.y2);
+      ctx.fillRect(bound.x1, bound.y1, bound.x2, bound.y2);
+      ctx.beginPath();
+      ctx.arc(bound.x1, bound.centerY(), bound.centerY(), 0, Math.PI * 2);
+      ctx.arc(bound.x2, bound.centerY(), bound.centerY(), 0, Math.PI * 2);
+      ctx.fill();
     }
     ctx.restore();
   }

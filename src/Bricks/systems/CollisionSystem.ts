@@ -14,21 +14,32 @@ export default class CollisionSystem extends System {
   }
 
   process(entity: Entity, delta: number): void {
-    const physical = this.physicalMapper.get(entity)
-    const position = this.positionMapper.get(entity)
+    const physical: Physical = this.physicalMapper.get(entity);
+    const position: Position = this.positionMapper.get(entity);
+    const bound: Bound = this.boundMapper.get(entity);
 
     this.teamManager.getTeam('board').forEach(target => {
       if (this.overlap(target, entity)) {
-        const targetPosition = this.positionMapper.get(target)
-        const targetPhysical = this.physicalMapper.get(target)
-        physical.vx = physical.vx + targetPhysical.vx / 10
-        physical.vy = -physical.vy
+        const targetPosition = this.positionMapper.get(target);
+        const targetPhysical = this.physicalMapper.get(target);
+        const targetBound = this.boundMapper.get(target);
+        const leftCircle = new Position(targetPosition.x + targetBound.x1, targetPosition.y + targetBound.centerY());
+        const rightCircle = new Position(targetPosition.x + targetBound.x2, targetPosition.y + targetBound.centerY());
+
+        if (this.distance(leftCircle, position) <= targetBound.height() / 2 + bound.width() / 2) {
+          physical.vx = -physical.vx
+        } else if (this.distance(leftCircle, position) <= targetBound.height() / 2 + bound.width() / 2) {
+          physical.vx = -physical.vx
+        } else {
+          physical.vx = physical.vx + targetPhysical.vx / 10;
+          physical.vy = -physical.vy;
+        }
       }
     })
 
     this.teamManager.getTeam('brick').forEach(target => {
       if (this.overlap(target, entity)) {
-        this.entityManager.remove(target)
+        this.entityManager.remove(target);
       }
     })
   }
@@ -46,5 +57,9 @@ export default class CollisionSystem extends System {
            (bp.y + bb.y1 <= ap.y + ab.y2);
     }
     return false;
+  }
+
+  distance(ap: Position,bp: Position): number {
+    return Math.sqrt((ap.x - bp.x) ** 2 + (ap.y - bp.y) ** 2)
   }
 }

@@ -22,4 +22,20 @@ export default class Bound extends Component {
       throw new Error('Bound: init error')
     }
   }
+
+  centerX() {
+    return (this.x1 + this.x2) / 2
+  }
+
+  centerY() {
+    return (this.y1 + this.y2) / 2
+  }
+
+  width() {
+    return this.x2 - this.x1
+  }
+
+  height() {
+    return this.y2 - this.y1
+  }
 }
